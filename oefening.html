@@ -2175,7 +2175,7 @@
         // State
         let currentExercise = null;
         let currentStep = 1;
-        let maxSteps = 7;
+        let maxSteps = 7; // Default for verleden tijd, wordt 6 voor tegenwoordig, 5 voor voltooid/sterk
         let userIsPersoonsvorm = null;
         let userTime = null;
         let userWerkwoordType = null;
@@ -2237,38 +2237,44 @@
             // Show current step
             if (step === 1) {
                 document.getElementById('step1').classList.remove('hidden');
-                updateProgress(1, 7);
+                updateProgress(1, maxSteps);
             } else if (step === 2) {
                 if (userIsPersoonsvorm) {
                     document.getElementById('step2a').classList.remove('hidden');
-                    updateProgress(2, 7);
+                    updateProgress(2, maxSteps);
                 } else {
                     // Voltooid deelwoord - show first VD step (infinitief)
                     document.getElementById('step2b').classList.remove('hidden');
-                    updateProgress(2, 5);
                     maxSteps = 5;
+                    updateProgress(2, 5);
                     vdStep = 1;
                     // Autofocus on infinitief input
                     setTimeout(() => {
                         document.getElementById('infinitiefInput')?.focus();
                     }, 100);
                 }
-            } else if (step === 2.5) { // onderwerp step (NEW)
+            } else if (step === 2.5) { // onderwerp step
                 document.getElementById('step2half').classList.remove('hidden');
-                updateProgress(3, 7);
+                updateProgress(3, maxSteps);
             } else if (step === 2.75) { // sterk/zwak step
                 document.getElementById('step2c').classList.remove('hidden');
-                updateProgress(4, 7);
+                updateProgress(4, maxSteps);
             } else if (step === 3) {
                 document.getElementById('step3').classList.remove('hidden');
-                updateProgress(5, 7);
+                // For tegenwoordige tijd: 6 steps total, this is step 4
+                // For verleden tijd: 7 steps total, this is step 5
+                const stepNumber = (maxSteps === 6) ? 4 : 5;
+                updateProgress(stepNumber, maxSteps);
                 // Autofocus on stam input
                 setTimeout(() => {
                     document.getElementById('stamInput')?.focus();
                 }, 100);
             } else if (step === 4) {
                 document.getElementById('step4').classList.remove('hidden');
-                updateProgress(6, 7);
+                // For tegenwoordige tijd: 6 steps total, this is step 5
+                // For verleden tijd: 7 steps total, this is step 6
+                const stepNumber = (maxSteps === 6) ? 5 : 6;
+                updateProgress(stepNumber, maxSteps);
                 
                 // Show hint button for both tegenwoordige and verleden tijd
                 const hintButton = document.getElementById('hintButton');
@@ -2291,7 +2297,10 @@
                 }
             } else if (step === 5) {
                 document.getElementById('step5').classList.remove('hidden');
-                updateProgress(7, 7);
+                // For tegenwoordige tijd: 6 steps total, this is step 6
+                // For verleden tijd: 7 steps total, this is step 7
+                const stepNumber = (maxSteps === 6) ? 6 : 7;
+                updateProgress(stepNumber, maxSteps);
                 // Autofocus on final input
                 setTimeout(() => {
                     document.getElementById('finalInput')?.focus();
@@ -2443,6 +2452,8 @@
                 if (userTime === 'verleden') {
                     showModal(true, "Goed zo! 🎉", "", () => showStep(2.75));
                 } else {
+                    // Tegenwoordige tijd: set maxSteps to 6 (no sterk/zwak step)
+                    maxSteps = 6;
                     showModal(true, "Goed zo! 🎉", "", () => showStep(3));
                 }
             } else {
