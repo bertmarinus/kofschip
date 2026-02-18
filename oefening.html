@@ -5987,6 +5987,9 @@
                 card.classList.add('hidden');
             });
 
+            // Disable Enter key immediately when showing feedback
+            feedbackEnterEnabled = false;
+            
             if (isCorrect) {
                 document.getElementById('successAnswer').textContent = userAnswer;
                 document.getElementById('successExplanation').textContent = explanation;
@@ -5999,6 +6002,11 @@
                 document.getElementById('feedbackError').classList.remove('hidden');
                 updateProgress(maxSteps, maxSteps);
             }
+            
+            // Enable Enter key after 500ms to prevent double-trigger
+            setTimeout(() => {
+                feedbackEnterEnabled = true;
+            }, 500);
         }
 
         // Global enter key handler for hint modal only
@@ -6065,13 +6073,15 @@
         });
 
         // Global Enter key handler for feedback screens
+        let feedbackEnterEnabled = false; // Prevent immediate double-trigger
+        
         document.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 // Check if we're on a feedback screen (success or error)
                 const feedbackSuccess = document.getElementById('feedbackSuccess');
                 const feedbackError = document.getElementById('feedbackError');
                 
-                if (!feedbackSuccess.classList.contains('hidden') || !feedbackError.classList.contains('hidden')) {
+                if ((!feedbackSuccess.classList.contains('hidden') || !feedbackError.classList.contains('hidden')) && feedbackEnterEnabled) {
                     // Reload page for next exercise
                     window.location.href = 'oefening.html';
                 }
