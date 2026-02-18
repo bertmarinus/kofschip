@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>'t Kofschip Oefenen</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #667eea;
+            --primary-dark: #5568d3;
+            --secondary: #48bb78;
+            --background: #f0f4f8;
+            --card-bg: #ffffff;
+            --text-dark: #2d3748;
+            --text-light: #718096;
+            --border: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #e0e7ff 0%, #fce7f3 50%, #dbeafe 100%);
+            min-height: 100vh;
+            padding: 5px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (min-width: 768px) and (max-width: 1024px) {
+            /* iPad - more vertical space */
+            body {
+                padding: 20px;
+            }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 15px;
+            animation: fadeInDown 0.6s ease;
+        }
+
+        .app-icon {
+            width: 75px;
+            height: 75px;
+            background: linear-gradient(135deg, var(--primary) 0%, #764ba2 100%);
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin-bottom: 10px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .header h1 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 44px;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: var(--text-light);
+            font-weight: 600;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 28px;
+            padding: 50px 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+            animation: fadeInUp 0.6s ease 0.2s both;
+        }
+
+        .card h2 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 32px;
+            color: var(--text-dark);
+            margin-bottom: 12px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .hint {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 18px;
+            margin-bottom: 35px;
+        }
+
+        .difficulty-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .difficulty-btn {
+            padding: 14px 28px;
+            border: 3px solid var(--border);
+            background: white;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Fredoka', sans-serif;
+            min-width: 130px;
+        }
+
+        .difficulty-btn:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary);
+        }
+
+        .difficulty-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .start-section {
+            text-align: center;
+        }
+
+        .start-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #d4fc79 0%, var(--secondary) 100%);
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+
+        .start-section h3 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 28px;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .start-section p {
+            color: var(--text-light);
+            font-size: 17px;
+            margin-bottom: 30px;
+        }
+
+        .start-btn {
+            padding: 18px 50px;
+            background: #48bb78;
+            border: none;
+            border-radius: 16px;
+            font-size: 20px;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            font-family: 'Fredoka', sans-serif;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(72, 187, 120, 0.3);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .start-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(72, 187, 120, 0.4);
+        }
+
+        .start-btn:active {
+            transform: translateY(-1px);
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive - iPad Landscape Priority */
+        @media (max-width: 1024px) and (orientation: landscape) {
+            .container {
+                max-width: 900px;
+            }
+            
+            .card {
+                padding: 40px 35px;
+            }
+        }
+
+        /* Mobile Portrait */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 38px;
+            }
+
+            .subtitle {
+                font-size: 17px;
+            }
+
+            .app-icon {
+                width: 70px;
+                height: 70px;
+                font-size: 38px;
+                margin-bottom: 15px;
+            }
+
+            .card {
+                padding: 35px 25px;
+            }
+
+            .card h2 {
+                font-size: 26px;
+            }
+
+            .hint {
+                font-size: 16px;
+            }
+
+            .difficulty-buttons {
+                gap: 10px;
+            }
+
+            .difficulty-btn {
+                padding: 12px 22px;
+                font-size: 16px;
+                min-width: 110px;
+            }
+
+            .start-icon {
+                width: 65px;
+                height: 65px;
+                font-size: 32px;
+            }
+
+            .start-section h3 {
+                font-size: 24px;
+            }
+
+            .start-section p {
+                font-size: 16px;
+            }
+
+            .start-btn {
+                padding: 16px 40px;
+                font-size: 18px;
+            }
+        }
+
+        /* Very small screens */
+        @media (max-width: 480px) {
+            .difficulty-buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .difficulty-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="app-icon">✨</div>
+            <h1>'t Kofschip Oefenen</h1>
+            <p class="subtitle">Leer stap voor stap de juiste werkwoordsvorm te kiezen!</p>
+        </div>
+
+        <div class="card">
+            <h2>Wat wil je oefenen?</h2>
+            <p class="hint">Kies een type oefening om te beginnen</p>
+
+            <div class="difficulty-buttons">
+                <button class="difficulty-btn active" data-level="alles">Alles</button>
+                <button class="difficulty-btn" data-level="tegenwoordig">Tegenwoordige tijd</button>
+                <button class="difficulty-btn" data-level="verleden">Verleden tijd</button>
+                <button class="difficulty-btn" data-level="voltooid">Voltooid Deelwoord</button>
+            </div>
+
+            <div class="start-section">
+                <div class="start-icon">📖</div>
+                <h3>Klaar om te oefenen?</h3>
+                <a href="#" class="start-btn" id="startBtn">Start Oefening</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedDifficulty = 'alles';
+
+        // Difficulty button handling
+        document.querySelectorAll('.difficulty-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.difficulty-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                selectedDifficulty = this.dataset.level;
+            });
+        });
+
+        // Start button
+        document.getElementById('startBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            // Store selected difficulty in sessionStorage
+            sessionStorage.setItem('difficulty', selectedDifficulty);
+            // Navigate to oefening page
+            window.location.href = 'oefening.html';
+        });
+    </script>
+</body>
+</html>
