@@ -6064,6 +6064,20 @@
             if (e.key === 'Enter') checkAnswer();
         });
 
+        // Global Enter key handler for feedback screens
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                // Check if we're on a feedback screen (success or error)
+                const feedbackSuccess = document.getElementById('feedbackSuccess');
+                const feedbackError = document.getElementById('feedbackError');
+                
+                if (!feedbackSuccess.classList.contains('hidden') || !feedbackError.classList.contains('hidden')) {
+                    // Reload page for next exercise
+                    window.location.href = 'oefening.html';
+                }
+            }
+        });
+
         // Start
         init();
     </script>
