@@ -1,0 +1,1537 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>'t Kofschip Oefening</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #667eea;
+            --primary-dark: #5568d3;
+            --secondary: #48bb78;
+            --background: #f0f4f8;
+            --card-bg: #ffffff;
+            --text-dark: #2d3748;
+            --text-light: #718096;
+            --border: #e2e8f0;
+            --success: #48bb78;
+            --error: #f56565;
+            --warning: #ed8936;
+        }
+
+        body {
+            font-family: 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #e0e7ff 0%, #fce7f3 50%, #dbeafe 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: var(--primary);
+        }
+
+        .progress-section {
+            margin-bottom: 20px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .progress-text {
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 16px;
+        }
+
+        .progress-percent {
+            font-weight: 600;
+            color: var(--text-light);
+            font-size: 16px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #667eea;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .question-card {
+            background: #667eea;
+            border-radius: 24px;
+            padding: 35px 40px;
+            margin-bottom: 25px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3);
+        }
+
+        .question-sentence {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        .question-word {
+            font-size: 18px;
+            opacity: 0.95;
+        }
+
+        .question-word strong {
+            font-weight: 700;
+        }
+
+        .content-card {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+        }
+
+        .icon-box {
+            width: 70px;
+            height: 70px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            margin: 0 auto 20px;
+        }
+
+        .icon-box.question { background: #dbeafe; }
+        .icon-box.time { background: #fed7aa; }
+        .icon-box.text { background: #e9d5ff; }
+        .icon-box.sparkle { background: #e9d5ff; }
+        .icon-box.success { background: #d1fae5; }
+        .icon-box.error { background: #fed7d7; }
+
+        .content-title {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 30px;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .content-subtitle {
+            color: var(--text-light);
+            font-size: 17px;
+            margin-bottom: 35px;
+            text-align: center;
+        }
+
+        .choice-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .choice-buttons.four-items {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .choice-btn {
+            padding: 30px 20px;
+            border: 3px solid var(--border);
+            background: white;
+            border-radius: 18px;
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        .choice-btn:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+        }
+
+        .choice-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .choice-btn .plus {
+            color: var(--primary);
+            font-weight: 700;
+            margin-right: 5px;
+        }
+
+        .option-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .option-btn {
+            padding: 25px 25px;
+            border: 3px solid var(--border);
+            background: white;
+            border-radius: 18px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .option-btn:hover {
+            border-color: var(--primary);
+            transform: translateX(5px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.15);
+        }
+
+        .option-title {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+        }
+
+        .option-example {
+            font-size: 15px;
+            color: var(--text-light);
+        }
+
+        .tip-box {
+            background: #e0f2fe;
+            border-left: 4px solid var(--primary);
+            padding: 18px 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+
+        .tip-box strong {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .tip-box em {
+            font-style: italic;
+        }
+
+        .input-section {
+            margin-bottom: 25px;
+        }
+
+        .input-label {
+            background: #fef3c7;
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            text-align: center;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .input-hint {
+            font-size: 15px;
+            color: var(--text-light);
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 18px 20px;
+            border: 3px solid var(--border);
+            border-radius: 14px;
+            font-size: 18px;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .text-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .text-input::placeholder {
+            color: #cbd5e0;
+        }
+
+        .preview-box {
+            background: #e0f2fe;
+            padding: 18px 20px;
+            border-radius: 12px;
+            margin-top: 15px;
+        }
+
+        .preview-label {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .preview-text {
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        .button-row {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .btn-back {
+            flex: 1;
+            padding: 16px 24px;
+            border: 3px solid var(--border);
+            background: white;
+            border-radius: 14px;
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        .btn-back:hover {
+            border-color: var(--text-light);
+            background: #f7fafc;
+        }
+
+        .btn-primary {
+            flex: 2;
+            padding: 16px 24px;
+            background: #667eea;
+            border: none;
+            border-radius: 14px;
+            font-size: 17px;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Fredoka', sans-serif;
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .feedback-box {
+            margin-bottom: 25px;
+        }
+
+        .answer-display {
+            padding: 20px;
+            border-radius: 14px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .answer-display.success {
+            background: #d1fae5;
+        }
+
+        .answer-display.error {
+            background: #fed7d7;
+        }
+
+        .answer-label {
+            font-size: 15px;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .answer-value {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 26px;
+            font-weight: 700;
+        }
+
+        .answer-value.success {
+            color: var(--success);
+        }
+
+        .answer-value.error {
+            color: var(--error);
+        }
+
+        .explanation-box {
+            background: #e0f2fe;
+            padding: 18px 20px;
+            border-radius: 12px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .explanation-label {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .explanation-text {
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        .final-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .btn-secondary {
+            padding: 16px 24px;
+            border: 3px solid var(--border);
+            background: white;
+            border-radius: 14px;
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Fredoka', sans-serif;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--text-light);
+            background: #f7fafc;
+        }
+
+        .btn-success {
+            padding: 16px 24px;
+            background: #48bb78;
+            border: none;
+            border-radius: 14px;
+            font-size: 17px;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Fredoka', sans-serif;
+            box-shadow: 0 6px 20px rgba(72, 187, 120, 0.3);
+            text-decoration: none;
+            text-align: center;
+            display: block;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(72, 187, 120, 0.4);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Popup Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 30px 40px;
+            max-width: 350px;
+            width: 90%;
+            text-align: center;
+            animation: popIn 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes popIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .modal-content.success-bg {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+        }
+
+        .modal-content.error-bg {
+            background: linear-gradient(135deg, #fc8181 0%, #f56565 100%);
+        }
+
+        .modal-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 36px;
+            font-weight: 700;
+        }
+
+        .modal-icon.success {
+            color: #48bb78;
+        }
+
+        .modal-icon.error {
+            color: #f56565;
+        }
+
+        .modal-content h3 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 32px;
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .modal-content.success-bg h3,
+        .modal-content.error-bg h3 {
+            color: white;
+        }
+
+        .modal-content p {
+            font-size: 18px;
+            margin: 10px 0 0 0;
+            font-weight: 600;
+        }
+
+        .modal-content.success-bg p,
+        .modal-content.error-bg p {
+            color: white;
+        }
+
+        .modal-btn {
+            width: 100%;
+            padding: 16px 24px;
+            border: none;
+            border-radius: 14px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Fredoka', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .modal-btn.success {
+            background: linear-gradient(135deg, #d4fc79 0%, var(--secondary) 100%);
+            color: white;
+            box-shadow: 0 6px 20px rgba(72, 187, 120, 0.3);
+        }
+
+        .modal-btn.success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(72, 187, 120, 0.4);
+        }
+
+        .modal-btn.error {
+            background: linear-gradient(135deg, #fc8181 0%, var(--error) 100%);
+            color: white;
+            box-shadow: 0 6px 20px rgba(245, 101, 101, 0.3);
+        }
+
+        .modal-btn.error:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(245, 101, 101, 0.4);
+        }
+
+        /* Hint Table Styles */
+        .hint-table-container {
+            margin-top: 20px;
+            overflow-x: auto;
+        }
+
+        .hint-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .hint-table th {
+            background: linear-gradient(135deg, var(--primary) 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+            text-align: left;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .hint-table td {
+            padding: 15px 20px;
+            border-bottom: 2px solid #e2e8f0;
+            font-size: 16px;
+            color: #2d3748;
+        }
+
+        .hint-table td * {
+            color: #2d3748 !important;
+        }
+
+        .hint-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .hint-table tr:nth-child(even) {
+            background: #f7fafc;
+        }
+
+        .hint-table td:first-child {
+            font-weight: 700;
+            color: var(--primary);
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        .hint-table td strong {
+            color: var(--text-dark);
+            font-weight: 700;
+        }
+
+        .hint-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: #e0f2fe;
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            color: var(--primary);
+            font-weight: 600;
+            font-family: 'Fredoka', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .hint-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .modal-content.large {
+            max-width: 700px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) and (orientation: landscape) {
+            .container {
+                max-width: 900px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+
+            .question-card {
+                padding: 25px 20px;
+            }
+
+            .question-sentence {
+                font-size: 22px;
+            }
+
+            .question-word {
+                font-size: 16px;
+            }
+
+            .content-card {
+                padding: 30px 25px;
+            }
+
+            .content-title {
+                font-size: 24px;
+            }
+
+            .content-subtitle {
+                font-size: 15px;
+            }
+
+            .choice-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            .choice-btn {
+                padding: 22px 15px;
+                font-size: 19px;
+            }
+
+            .option-btn {
+                padding: 20px 18px;
+            }
+
+            .option-title {
+                font-size: 18px;
+            }
+
+            .final-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .question-sentence {
+                font-size: 20px;
+            }
+
+            .content-title {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">
+            <span>←</span> Terug naar overzicht
+        </a>
+
+        <!-- Progress Bar -->
+        <div class="progress-section">
+            <div class="progress-header">
+                <span class="progress-text" id="progressText">Stap 1 van 5</span>
+                <span class="progress-percent" id="progressPercent">20%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 20%"></div>
+            </div>
+        </div>
+
+        <!-- Question Card (always visible) -->
+        <div class="question-card">
+            <div class="question-sentence" id="sentenceDisplay">Morgen [...] hij zijn vriend</div>
+            <div class="question-word">Werkwoord: <strong id="werkwoordDisplay">bellen</strong></div>
+            <div class="question-word">Onderwerp: <strong id="onderwerpDisplay">hij (enkelvoud)</strong></div>
+            <div class="question-word" id="tijdDisplay" style="display: none;">Tijd: <strong id="tijdValue"></strong></div>
+        </div>
+
+        <!-- Step 1: Is het een persoonsvorm? -->
+        <div class="content-card" id="step1">
+            <div class="icon-box question">❓</div>
+            <h2 class="content-title">Is het een persoonsvorm?</h2>
+            <p class="content-subtitle">Een persoonsvorm is een werkwoord dat je vervoegt (ik loop, jij loopt, etc.)</p>
+            
+            <div class="choice-buttons">
+                <button class="choice-btn" onclick="answerPersoonsvorm(true)">Ja</button>
+                <button class="choice-btn" onclick="answerPersoonsvorm(false)">Nee</button>
+            </div>
+
+            <div class="tip-box">
+                <strong>Tip:</strong> Als het werkwoord niet verandert en altijd hetzelfde blijft (zoals bij voltooid deelwoord: "Ik heb <em>gelopen</em>"), dan is het geen persoonsvorm.
+            </div>
+        </div>
+
+        <!-- Step 2a: Welke tijd? (only if persoonsvorm = ja) -->
+        <div class="content-card hidden" id="step2a">
+            <div class="icon-box time">🕐</div>
+            <h2 class="content-title">Welke tijd is het?</h2>
+            <p class="content-subtitle">Kies de juiste tijd voor dit werkwoord</p>
+            
+            <div class="option-list">
+                <button class="option-btn" onclick="selectTime('tegenwoordig')">
+                    <div class="option-title">Tegenwoordige Tijd (t.t.)</div>
+                    <div class="option-example">Voorbeeld: Ik loop nu</div>
+                </button>
+                <button class="option-btn" onclick="selectTime('verleden')">
+                    <div class="option-title">Verleden Tijd (v.t.)</div>
+                    <div class="option-example">Voorbeeld: Ik liep gisteren</div>
+                </button>
+            </div>
+
+            <div class="button-row">
+                <button class="btn-back" onclick="goToStep(1)">← Vorige stap</button>
+            </div>
+        </div>
+
+        <!-- Step 2b: Voltooid Deelwoord (only if persoonsvorm = nee) -->
+        <div class="content-card hidden" id="step2b">
+            <div class="icon-box text">✏️</div>
+            <h2 class="content-title">Voltooid Deelwoord</h2>
+            <p class="content-subtitle">Typ het volledige voltooid deelwoord</p>
+            
+            <div class="input-section">
+                <div class="input-hint">Typ het voltooid deelwoord:</div>
+                <input type="text" class="text-input" id="deelwoordInput" placeholder="Typ hier..." autocomplete="off" inputmode="text">
+            </div>
+
+            <div class="button-row">
+                <button class="btn-back" onclick="goToStep(1)">← Vorige stap</button>
+                <button class="btn-primary" onclick="checkDeelwoord()">Controleer →</button>
+            </div>
+        </div>
+
+        <!-- Step 2.5: Wat is het onderwerp? (NEW - only if persoonsvorm = ja) -->
+        <div class="content-card hidden" id="step2half">
+            <div class="icon-box" style="background: #dbeafe;">👤</div>
+            <h2 class="content-title">Wat is het onderwerp?</h2>
+            <p class="content-subtitle">Kies het onderwerp van de zin</p>
+            
+            <div class="choice-buttons">
+                <button class="choice-btn" onclick="selectOnderwerp('ik')">ik-vorm</button>
+                <button class="choice-btn" onclick="selectOnderwerp('jij')">jij-vorm</button>
+                <button class="choice-btn" onclick="selectOnderwerp('hij')">hij/zij/het-vorm</button>
+                <button class="choice-btn" onclick="selectOnderwerp('wij')">wij/jullie/zij-vorm</button>
+            </div>
+
+            <div class="button-row">
+                <button class="btn-back" onclick="goToStep(2)">← Vorige stap</button>
+            </div>
+        </div>
+
+        <!-- Step 2c: Sterk of Zwak werkwoord? (only if persoonsvorm = ja and tijd = verleden) -->
+        <div class="content-card hidden" id="step2c">
+            <div class="icon-box" style="background: #fef3c7;">💪</div>
+            <h2 class="content-title">Is het een sterk of zwak werkwoord?</h2>
+            
+            <div class="choice-buttons">
+                <button class="choice-btn" onclick="selectWerkwoordType('sterk')">Sterk</button>
+                <button class="choice-btn" onclick="selectWerkwoordType('zwak')">Zwak</button>
+            </div>
+
+            <div class="tip-box">
+                <strong>Tip:</strong> Een <strong>zwak werkwoord</strong> krijgt -te/-de in de verleden tijd (werken → werkte). Een <strong>sterk werkwoord</strong> verandert in de stam (lopen → liep).
+            </div>
+
+            <div class="button-row">
+                <button class="btn-back" onclick="goToStep(2)">← Vorige stap</button>
+            </div>
+        </div>
+
+        <!-- Step 3: Wat is de stam? -->
+        <div class="content-card hidden" id="step3">
+            <div class="icon-box text">📝</div>
+            <h2 class="content-title">Wat is de stam van het werkwoord?</h2>
+            
+            <div class="input-section">
+                <div class="input-hint">Typ de ik-vorm (bijvoorbeeld: bij "lopen" is de stam "loop")</div>
+                <input type="text" class="text-input" id="stamInput" placeholder="Typ hier..." autocomplete="off" inputmode="text">
+            </div>
+
+            <div class="tip-box">
+                <strong>Tip:</strong> De stam is het werkwoord zonder -en. Bijvoorbeeld: <em>lopen</em> → <em>loop</em>, <em>praten</em> → <em>praat</em>, <em>werken</em> → <em>werk</em>.
+            </div>
+
+            <div class="button-row">
+                <button class="btn-back" onclick="goToStep(2)">← Vorige stap</button>
+                <button class="btn-primary" onclick="checkStam()">Controleer →</button>
+            </div>
+        </div>
+
+        <!-- Step 4: Welke uitgang? -->
+        <div class="content-card hidden" id="step4">
+            <div class="icon-box text">T</div>
+            <h2 class="content-title">Welke uitgang moet erbij?</h2>
+            
+            <button class="hint-btn" id="hintButton" onclick="showHintTable()" style="display: none;">
+                💡 Toon uitgang-tabel
+            </button>
+
+            <!-- Tegenwoordige tijd uitgangen -->
+            <div class="choice-buttons" id="uitgangTegenwoordig" style="display: none;">
+                <button class="choice-btn uitgang-btn" onclick="selectUitgang('t')"><span class="plus">+</span> t</button>
+                <button class="choice-btn uitgang-btn" onclick="selectUitgang('en')"><span class="plus">+</span> en</button>
+            </div>
+
+            <!-- Verleden tijd uitgangen -->
+            <div class="choice-buttons" id="uitgangVerleden" style="display: none;">
+                <button class="choice-btn uitgang-btn" onclick="selectUitgang('te')"><span class="plus">+</span> te</button>
+                <button class="choice-btn uitgang-btn" onclick="selectUitgang('de')"><span class="plus">+</span> de</button>
+                <button class="choice-btn uitgang-btn" onclick="selectUitgang('ten')"><span class="plus">+</span> ten</button>
+                <button class="choice-btn uitgang-btn" onclick="selectUitgang('den')"><span class="plus">+</span> den</button>
+            </div>
+
+            <div class="preview-box">
+                <div class="preview-label">Preview:</div>
+                <div class="preview-text" id="previewText">
+                    <strong>Tip:</strong> Denk aan de <strong>'t kofschip</strong> regel! Als de stam eindigt op <strong>t, k, o, f, s, ch, i, of p</strong>, gebruik je voor verleden tijd <strong>te(en)</strong>. Anders <strong>de(en)</strong>. Voor tegenwoordige tijd: <strong>t</strong> bij hij/zij/het, <strong>en</strong> bij meervoud.
+                </div>
+            </div>
+
+            <div class="button-row">
+                <button class="btn-back" onclick="goToStep(3)">← Vorige stap</button>
+            </div>
+        </div>
+
+        <!-- Step 5: Wat is het antwoord? -->
+        <div class="content-card hidden" id="step5">
+            <div class="icon-box sparkle">✨</div>
+            <h2 class="content-title">Wat is het antwoord?</h2>
+            <p class="content-subtitle">Typ het volledige werkwoord in</p>
+            
+            <div class="input-section">
+                <input type="text" class="text-input" id="finalInput" placeholder="Typ hier..." autocomplete="off" inputmode="text">
+            </div>
+
+            <div class="button-row">
+                <button class="btn-back" onclick="goToStep(4)">← Vorige stap</button>
+                <button class="btn-primary" onclick="checkAnswer()">Controleer antwoord →</button>
+            </div>
+        </div>
+
+        <!-- Feedback: Success -->
+        <div class="content-card hidden" id="feedbackSuccess">
+            <div class="icon-box success">✓</div>
+            <h2 class="content-title">Goed gedaan! 🎉</h2>
+            <p class="content-subtitle">Je hebt het juiste antwoord gevonden!</p>
+            
+            <div class="feedback-box">
+                <div class="answer-display success">
+                    <div class="answer-label">Jouw antwoord:</div>
+                    <div class="answer-value success" id="successAnswer">praatte</div>
+                </div>
+
+                <div class="explanation-box">
+                    <div class="explanation-label">🧠 Uitleg:</div>
+                    <div class="explanation-text" id="successExplanation">
+                        Verleden tijd: stam 'praat' + 'te' (geen 't kofschip letter, dus met 'te').
+                    </div>
+                </div>
+            </div>
+
+            <div class="final-buttons">
+                <a href="index.html" class="btn-secondary">Terug naar overzicht</a>
+                <a href="oefening.html" class="btn-success">Volgende oefening →</a>
+            </div>
+        </div>
+
+        <!-- Feedback: Error -->
+        <div class="content-card hidden" id="feedbackError">
+            <div class="icon-box error">✗</div>
+            <h2 class="content-title">Bijna goed!</h2>
+            <p class="content-subtitle">Lees de uitleg en probeer het nog eens</p>
+            
+            <div class="feedback-box">
+                <div class="answer-display error">
+                    <div class="answer-label">Jouw antwoord:</div>
+                    <div class="answer-value error" id="errorUserAnswer">hebben</div>
+                </div>
+
+                <div class="answer-display success">
+                    <div class="answer-label">Het juiste antwoord:</div>
+                    <div class="answer-value success" id="errorCorrectAnswer">al</div>
+                </div>
+
+                <div class="explanation-box">
+                    <div class="explanation-label">🧠 Uitleg:</div>
+                    <div class="explanation-text" id="errorExplanation">
+                        Dit is geen werkwoord maar een bijwoord. Let op de truc in de zin!
+                    </div>
+                </div>
+            </div>
+
+            <div class="final-buttons">
+                <a href="index.html" class="btn-secondary">Terug naar overzicht</a>
+                <a href="oefening.html" class="btn-success">Volgende oefening →</a>
+            </div>
+        </div>
+
+        <!-- Modal Popup for step feedback -->
+        <div class="modal-overlay hidden" id="feedbackModal">
+            <div class="modal-content" id="modalContent">
+                <div class="modal-icon" id="modalIcon">✓</div>
+                <h3 id="modalTitle">Goed zo!</h3>
+                <p id="modalMessage"></p>
+            </div>
+        </div>
+
+        <!-- Modal for Hint Table -->
+        <div class="modal-overlay hidden" id="hintModal">
+            <div class="modal-content large">
+                <div class="icon-box" style="background: #e0f2fe;">💡</div>
+                <h3 id="hintModalTitle">Uitgangen Tegenwoordige Tijd</h3>
+                <p style="margin-bottom: 20px; color: var(--text-light);">Kies de juiste uitgang bij het onderwerp</p>
+                
+                <div class="hint-table-container" id="hintTableTegenwoordig">
+                    <table class="hint-table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Onderwerp</th>
+                                <th>Uitgang</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td rowspan="3">Enkelvoud</td>
+                                <td>ik, ... jij</td>
+                                <td>stam (ik-vorm)</td>
+                            </tr>
+                            <tr>
+                                <td>jij ...</td>
+                                <td>stam + <strong>t</strong></td>
+                            </tr>
+                            <tr>
+                                <td>hij, zij, het</td>
+                                <td>stam + <strong>t</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Meervoud</td>
+                                <td>wij, jullie, zij</td>
+                                <td><strong>infinitief</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="hint-table-container hidden" id="hintTableVerleden">
+                    <table class="hint-table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Onderwerp</th>
+                                <th>Uitgang</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td rowspan="3">Enkelvoud</td>
+                                <td>ik, ... jij</td>
+                                <td rowspan="3">stam + <strong>te/de</strong></td>
+                            </tr>
+                            <tr>
+                                <td>jij ...</td>
+                            </tr>
+                            <tr>
+                                <td>hij, zij, het</td>
+                            </tr>
+                            <tr>
+                                <td>Meervoud</td>
+                                <td>wij, jullie, zij</td>
+                                <td>stam + <strong>ten/den</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <button class="modal-btn success" onclick="closeHintModal()" style="margin-top: 25px; width: 100%;">Begrepen! →</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Exercise database - test oefeningen
+        const exercises = [
+            // TEGENWOORDIGE TIJD (2 zinnen)
+            {
+                sentence: "Elke dag [...] ik naar school",
+                werkwoord: "fietsen",
+                onderwerp: "ik",
+                onderwerpDisplay: "ik (enkelvoud)",
+                isPersoonsvorm: true,
+                tijd: "tegenwoordig",
+                type: "tegenwoordig",
+                isSterk: false,
+                stam: "fiets",
+                correctAnswer: "fiets",
+                uitgang: "",
+                explanation: "Tegenwoordige tijd: bij 'ik' gebruik je de stam 'fiets' zonder uitgang.",
+            },
+            {
+                sentence: "Hij [...] altijd zo hard",
+                werkwoord: "werken",
+                onderwerp: "hij",
+                onderwerpDisplay: "hij (enkelvoud)",
+                isPersoonsvorm: true,
+                tijd: "tegenwoordig",
+                type: "tegenwoordig",
+                isSterk: false,
+                stam: "werk",
+                correctAnswer: "werkt",
+                uitgang: "t",
+                explanation: "Tegenwoordige tijd: stam 'werk' + 't' (hij/zij/het krijgt een 't').",
+            },
+            
+            // VERLEDEN TIJD (2 zinnen)
+            {
+                sentence: "Gisteren [...] ik met mijn vriend",
+                werkwoord: "praten",
+                onderwerp: "ik",
+                onderwerpDisplay: "ik (enkelvoud)",
+                isPersoonsvorm: true,
+                tijd: "verleden",
+                type: "verleden",
+                isSterk: false,
+                stam: "praat",
+                correctAnswer: "praatte",
+                uitgang: "te",
+                explanation: "Verleden tijd: stam 'praat' + 'te' (stam eindigt op 't', dus 't kofschip letter → 'te').",
+            },
+            {
+                sentence: "Vorige week [...] zij hard voor het examen",
+                werkwoord: "werken",
+                onderwerp: "zij",
+                onderwerpDisplay: "zij (meervoud)",
+                isPersoonsvorm: true,
+                tijd: "verleden",
+                type: "verleden",
+                isSterk: false,
+                stam: "werk",
+                correctAnswer: "werkten",
+                uitgang: "ten",
+                explanation: "Verleden tijd meervoud: stam 'werk' + 'ten' (stam eindigt op 'k', dus 't kofschip letter → 'ten').",
+            },
+            
+            // VOLTOOID DEELWOORD (2 zinnen)
+            {
+                sentence: "Ik heb gisteren [...] met mijn oma",
+                werkwoord: "bellen",
+                onderwerp: "ik",
+                onderwerpDisplay: "ik (enkelvoud)",
+                isPersoonsvorm: false,
+                tijd: null,
+                type: "voltooid",
+                isSterk: false,
+                stam: "bel",
+                correctAnswer: "gebeld",
+                uitgang: null,
+                explanation: "Dit is een voltooid deelwoord: ge- + stam 'bel' + d (stam eindigt op 'l', geen 't kofschip letter → 'd').",
+            },
+            {
+                sentence: "Wij hebben hard [...]",
+                werkwoord: "lachen",
+                onderwerp: "wij",
+                onderwerpDisplay: "wij (meervoud)",
+                isPersoonsvorm: false,
+                tijd: null,
+                type: "voltooid",
+                isSterk: false,
+                stam: "lach",
+                correctAnswer: "gelachen",
+                uitgang: null,
+                explanation: "Dit is een voltooid deelwoord: ge- + stam 'lach' + en (eindigt op 'ch', dus 't kofschip letter → 'en' toevoegen).",
+            }
+        ];
+
+        // State
+        let currentExercise = null;
+        let currentStep = 1;
+        let maxSteps = 7;
+        let userIsPersoonsvorm = null;
+        let userTime = null;
+        let userWerkwoordType = null;
+        let nextStepAfterModal = null;
+
+        // Initialize
+        function init() {
+            const difficulty = sessionStorage.getItem('difficulty') || 'alles';
+            loadRandomExercise(difficulty);
+            showStep(1);
+        }
+
+        function loadRandomExercise(difficulty) {
+            let filtered = exercises;
+            if (difficulty !== 'alles') {
+                filtered = exercises.filter(ex => ex.type === difficulty);
+            }
+            if (filtered.length === 0) filtered = exercises;
+            
+            currentExercise = filtered[Math.floor(Math.random() * filtered.length)];
+            
+            // Update display
+            document.getElementById('sentenceDisplay').textContent = currentExercise.sentence;
+            document.getElementById('werkwoordDisplay').textContent = currentExercise.werkwoord;
+            document.getElementById('onderwerpDisplay').textContent = currentExercise.onderwerpDisplay;
+            
+            // Show tijd immediately if it's a persoonsvorm exercise
+            const tijdDisplay = document.getElementById('tijdDisplay');
+            const tijdValue = document.getElementById('tijdValue');
+            if (currentExercise.isPersoonsvorm && currentExercise.tijd) {
+                tijdDisplay.style.display = 'block';
+                if (currentExercise.tijd === 'tegenwoordig') {
+                    tijdValue.textContent = 'Tegenwoordige tijd';
+                } else if (currentExercise.tijd === 'verleden') {
+                    tijdValue.textContent = 'Verleden tijd';
+                }
+            } else {
+                tijdDisplay.style.display = 'none';
+            }
+        }
+
+        function updateProgress(step, total) {
+            const percent = Math.round((step / total) * 100);
+            document.getElementById('progressText').textContent = `Stap ${step} van ${total}`;
+            document.getElementById('progressPercent').textContent = `${percent}%`;
+            document.getElementById('progressFill').style.width = `${percent}%`;
+        }
+
+        function showStep(step) {
+            // Hide all steps
+            document.querySelectorAll('.content-card').forEach(card => {
+                card.classList.add('hidden');
+            });
+
+            currentStep = step;
+
+            // Show current step
+            if (step === 1) {
+                document.getElementById('step1').classList.remove('hidden');
+                updateProgress(1, 7);
+            } else if (step === 2) {
+                if (userIsPersoonsvorm) {
+                    document.getElementById('step2a').classList.remove('hidden');
+                    updateProgress(2, 7);
+                } else {
+                    document.getElementById('step2b').classList.remove('hidden');
+                    updateProgress(2, 2);
+                    maxSteps = 2;
+                    // Autofocus on deelwoord input
+                    setTimeout(() => {
+                        document.getElementById('deelwoordInput')?.focus();
+                    }, 100);
+                }
+            } else if (step === 2.5) { // onderwerp step (NEW)
+                document.getElementById('step2half').classList.remove('hidden');
+                updateProgress(3, 7);
+            } else if (step === 2.75) { // sterk/zwak step
+                document.getElementById('step2c').classList.remove('hidden');
+                updateProgress(4, 7);
+            } else if (step === 3) {
+                document.getElementById('step3').classList.remove('hidden');
+                updateProgress(5, 7);
+                // Autofocus on stam input
+                setTimeout(() => {
+                    document.getElementById('stamInput')?.focus();
+                }, 100);
+            } else if (step === 4) {
+                document.getElementById('step4').classList.remove('hidden');
+                updateProgress(6, 7);
+                
+                // Show hint button for both tegenwoordige and verleden tijd
+                const hintButton = document.getElementById('hintButton');
+                if (userTime === 'tegenwoordig' || userTime === 'verleden') {
+                    hintButton.style.display = 'inline-flex';
+                } else {
+                    hintButton.style.display = 'none';
+                }
+
+                // Show correct uitgangen based on tijd
+                const uitgangTegenwoordig = document.getElementById('uitgangTegenwoordig');
+                const uitgangVerleden = document.getElementById('uitgangVerleden');
+                
+                if (userTime === 'tegenwoordig') {
+                    uitgangTegenwoordig.style.display = 'grid';
+                    uitgangVerleden.style.display = 'none';
+                } else if (userTime === 'verleden') {
+                    uitgangTegenwoordig.style.display = 'none';
+                    uitgangVerleden.style.display = 'grid';
+                }
+            } else if (step === 5) {
+                document.getElementById('step5').classList.remove('hidden');
+                updateProgress(7, 7);
+                // Autofocus on final input
+                setTimeout(() => {
+                    document.getElementById('finalInput')?.focus();
+                }, 100);
+            }
+        }
+
+        function goToStep(step) {
+            showStep(step);
+        }
+
+        function answerPersoonsvorm(answer) {
+            const isCorrect = (answer === currentExercise.isPersoonsvorm);
+            
+            if (isCorrect) {
+                userIsPersoonsvorm = answer;
+                showModal(true, "Goed zo! 🎉", "", () => showStep(2));
+            } else {
+                showModal(false, "Helaas!", "", null);
+            }
+        }
+
+        function selectTime(time) {
+            const isCorrect = (time === currentExercise.tijd);
+            
+            if (isCorrect) {
+                userTime = time;
+                // Always go to onderwerp step after tijd
+                showModal(true, "Goed zo! 🎉", "", () => showStep(2.5));
+            } else {
+                showModal(false, "Helaas!", "", null);
+            }
+        }
+
+        function selectOnderwerp(onderwerp) {
+            // Map user selection to what we expect
+            const onderwerpMap = {
+                'ik': 'ik',
+                'jij': 'jij',
+                'hij': 'hij',
+                'wij': 'wij'
+            };
+            
+            // Check if correct (simple check based on onderwerp in exercise)
+            const correctOnderwerp = currentExercise.onderwerp.toLowerCase();
+            let isCorrect = false;
+            
+            if (onderwerp === 'ik' && correctOnderwerp === 'ik') isCorrect = true;
+            if (onderwerp === 'jij' && correctOnderwerp === 'jij') isCorrect = true;
+            if (onderwerp === 'hij' && (correctOnderwerp === 'hij' || correctOnderwerp === 'zij' || correctOnderwerp === 'het')) isCorrect = true;
+            if (onderwerp === 'wij' && (correctOnderwerp === 'wij' || correctOnderwerp === 'jullie' || correctOnderwerp === 'zij')) isCorrect = true;
+            
+            if (isCorrect) {
+                // After onderwerp, check if verleden tijd -> go to sterk/zwak, else go to stam
+                if (userTime === 'verleden') {
+                    showModal(true, "Goed zo! 🎉", "", () => showStep(2.75));
+                } else {
+                    showModal(true, "Goed zo! 🎉", "", () => showStep(3));
+                }
+            } else {
+                showModal(false, "Helaas!", "", null);
+            }
+        }
+
+        function selectWerkwoordType(type) {
+            const isCorrect = (type === 'sterk' && currentExercise.isSterk) || (type === 'zwak' && !currentExercise.isSterk);
+            
+            if (isCorrect) {
+                userWerkwoordType = type;
+                showModal(true, "Goed zo! 🎉", "", () => showStep(3));
+            } else {
+                showModal(false, "Helaas!", "", null);
+            }
+        }
+
+        function checkStam() {
+            const userAnswer = document.getElementById('stamInput').value.trim().toLowerCase();
+            const correctAnswer = currentExercise.stam.toLowerCase();
+
+            if (userAnswer === correctAnswer) {
+                showModal(true, "Goed zo! 🎉", "", () => showStep(4));
+            } else {
+                showModal(false, "Helaas!", "", null);
+                document.getElementById('stamInput').value = '';
+                // Refocus after modal closes
+                setTimeout(() => {
+                    document.getElementById('stamInput')?.focus();
+                }, 1600);
+            }
+        }
+
+        function selectUitgang(uitgang) {
+            const correctUitgang = currentExercise.uitgang.toLowerCase();
+            const isCorrect = (uitgang === correctUitgang);
+            
+            if (isCorrect) {
+                showModal(true, "Goed zo! 🎉", "", () => showStep(5));
+            } else {
+                showModal(false, "Helaas!", "", null);
+            }
+        }
+
+        function checkDeelwoord() {
+            const userAnswer = document.getElementById('deelwoordInput').value.trim().toLowerCase();
+            const correctAnswer = currentExercise.correctAnswer.toLowerCase();
+
+            if (userAnswer === correctAnswer) {
+                showFeedback(true, userAnswer, correctAnswer, currentExercise.explanation);
+            } else {
+                showFeedback(false, userAnswer, correctAnswer, currentExercise.explanation);
+            }
+        }
+
+        function checkAnswer() {
+            const userAnswer = document.getElementById('finalInput').value.trim().toLowerCase();
+            const correctAnswer = currentExercise.correctAnswer.toLowerCase();
+
+            if (userAnswer === correctAnswer) {
+                showFeedback(true, userAnswer, correctAnswer, currentExercise.explanation);
+            } else {
+                showFeedback(false, userAnswer, correctAnswer, currentExercise.explanation);
+            }
+        }
+
+        // Modal functions
+        function showModal(isSuccess, title, message, onClose = null) {
+            const modal = document.getElementById('feedbackModal');
+            const modalContent = document.getElementById('modalContent');
+            const icon = document.getElementById('modalIcon');
+            const titleEl = document.getElementById('modalTitle');
+            const messageEl = document.getElementById('modalMessage');
+
+            titleEl.textContent = title;
+            messageEl.textContent = message;
+            
+            if (isSuccess) {
+                modalContent.className = 'modal-content success-bg';
+                icon.className = 'modal-icon success';
+                icon.textContent = '✓';
+            } else {
+                modalContent.className = 'modal-content error-bg';
+                icon.className = 'modal-icon error';
+                icon.textContent = '✗';
+            }
+
+            nextStepAfterModal = onClose;
+            modal.classList.remove('hidden');
+            
+            // Auto-close with timer
+            const delay = isSuccess ? 800 : 1500; // 0.8s for success, 1.5s for error
+            setTimeout(() => {
+                closeModal();
+            }, delay);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('feedbackModal');
+            modal.classList.add('hidden');
+            
+            if (nextStepAfterModal) {
+                nextStepAfterModal();
+                nextStepAfterModal = null;
+            }
+        }
+
+        function showFeedback(isCorrect, userAnswer, correctAnswer, explanation) {
+            document.querySelectorAll('.content-card').forEach(card => {
+                card.classList.add('hidden');
+            });
+
+            if (isCorrect) {
+                document.getElementById('successAnswer').textContent = userAnswer;
+                document.getElementById('successExplanation').textContent = explanation;
+                document.getElementById('feedbackSuccess').classList.remove('hidden');
+                updateProgress(maxSteps, maxSteps);
+            } else {
+                document.getElementById('errorUserAnswer').textContent = userAnswer;
+                document.getElementById('errorCorrectAnswer').textContent = correctAnswer;
+                document.getElementById('errorExplanation').textContent = explanation;
+                document.getElementById('feedbackError').classList.remove('hidden');
+                updateProgress(maxSteps, maxSteps);
+            }
+        }
+
+        // Global enter key handler for hint modal only
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const hintModal = document.getElementById('hintModal');
+                if (!hintModal.classList.contains('hidden')) {
+                    closeHintModal();
+                }
+            }
+        });
+
+        function showHintTable() {
+            const hintModal = document.getElementById('hintModal');
+            const titleEl = document.getElementById('hintModalTitle');
+            const tegenwoordigTable = document.getElementById('hintTableTegenwoordig');
+            const verledenTable = document.getElementById('hintTableVerleden');
+            
+            if (userTime === 'tegenwoordig') {
+                titleEl.textContent = 'Uitgangen Tegenwoordige Tijd';
+                tegenwoordigTable.classList.remove('hidden');
+                verledenTable.classList.add('hidden');
+            } else if (userTime === 'verleden') {
+                titleEl.textContent = 'Uitgangen Verleden Tijd';
+                tegenwoordigTable.classList.add('hidden');
+                verledenTable.classList.remove('hidden');
+            }
+            
+            hintModal.classList.remove('hidden');
+        }
+
+        function closeHintModal() {
+            const hintModal = document.getElementById('hintModal');
+            hintModal.classList.add('hidden');
+            // Refocus on input field
+            setTimeout(() => {
+                document.getElementById('uitgangInput')?.focus();
+            }, 100);
+        }
+
+        // Enter key handlers
+        document.getElementById('deelwoordInput')?.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') checkDeelwoord();
+        });
+
+        document.getElementById('stamInput')?.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') checkStam();
+        });
+
+        document.getElementById('finalInput')?.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') checkAnswer();
+        });
+
+        // Start
+        init();
+    </script>
+</body>
+</html>
