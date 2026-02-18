@@ -170,6 +170,10 @@
             grid-template-columns: 1fr 1fr;
         }
 
+        #uitgangTegenwoordig {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+
         .choice-btn {
             padding: 30px 20px;
             border: 3px solid var(--border);
@@ -991,6 +995,7 @@
 
             <!-- Tegenwoordige tijd uitgangen -->
             <div class="choice-buttons" id="uitgangTegenwoordig" style="display: none;">
+                <button class="choice-btn uitgang-btn" onclick="selectUitgang('')">geen</button>
                 <button class="choice-btn uitgang-btn" onclick="selectUitgang('t')"><span class="plus">+</span> t</button>
                 <button class="choice-btn uitgang-btn" onclick="selectUitgang('en')"><span class="plus">+</span> en</button>
             </div>
